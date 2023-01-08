@@ -77,7 +77,7 @@ Publishes last build from `dist` to Telegram\
 Arguments:\
 `--token` - [Telegram API](https://core.telegram.org/bots/api) token\
 `--chatID` - [Telegram](https://telegram.org) chat id\
-`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) type of chat (adds '-' to `chatID` when `channel`)\
+`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) type of chat (adds '-' to `chatID` when `channel`)
 
 **Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
 \
