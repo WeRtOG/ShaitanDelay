@@ -36,7 +36,10 @@
         "win-install": "cd dev && installDist.bat",
         "win-uninstall": "cd dev && uninstallDist.bat",
         "win-update": "cd dev && reinstallDist.bat",
-        "win-build-update": "concurrently -m 1 -p none \"npm run build\" \"npm run win-update\""
+        "win-build-install": "concurrently -m 1 -p none \"npm run build\" \"npm run win-install\"",
+        "win-build-install-publish": "concurrently -m 1 -p none \"npm run build\" \"npm run win-install\" \"npm run publish\"",
+        "win-build-update": "concurrently -m 1 -p none \"npm run build\" \"npm run win-update\"",
+        "win-build-update-publish": "concurrently -m 1 -p none \"npm run build\" \"npm run win-update\" \"npm run publish\""
     },
     "eslintConfig": {
         "extends": [
