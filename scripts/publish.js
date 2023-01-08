@@ -2,6 +2,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const axios = require('axios');
 const md5 = require('js-md5');
+const path = require('path');
 
 function onError(error) {
     console.log('⚠️  An error occurred while executing the request: ');
@@ -29,8 +30,15 @@ async function isTokenValid(token) {
 }
 
 async function main() {
-    const zip = './dist/ShaitanDelayLatest.zip';
-    const configPath = './publish.config.json';
+    let zip = '';
+    var files = fs.readdirSync('./dist');
+
+    for (var i in files) {
+        if (path.extname(files[i]) === '.zip') {
+            zip = './dist/' + files[i];
+        }
+    }
+    let configPath = './publish.config.json';
 
     if (!fs.existsSync(zip)) {
         console.log('⚠️  ZIP-build not found.');
@@ -68,7 +76,7 @@ async function main() {
 
                     formData.append('chat_id', chatID);
                     formData.append('document', fs.createReadStream(zip));
-                    formData.append('caption', "*🔮 Build ID:*\n#" + md5(Date.now().toString()));
+                    formData.append('caption', "*🔮 Build hash: *\n#" + md5(Date.now().toString()));
                     formData.append('parse_mode', 'markdown')
 
                     const response = await axios.post(`${telegramAPI}/sendDocument`, formData, {

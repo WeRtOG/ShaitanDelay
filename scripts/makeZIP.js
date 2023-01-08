@@ -1,7 +1,7 @@
-var file_system = require('fs');
-var archiver = require('archiver');
+const fs = require('fs');
+const archiver = require('archiver');
 
-var output = file_system.createWriteStream('./dist/ShaitanDelayLatest.zip');
+var output = fs.createWriteStream('./dist/ShaitanDelay-build-' + Date.now() + '.zip');
 var archive = archiver('zip');
 
 output.on('close', function () {
