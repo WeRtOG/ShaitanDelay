@@ -23,7 +23,7 @@ npm run make-ssl
 
 ### `npm start`
 
-Runs the VST3 in the development mode.\
+Runs the VST3 in the development mode.
 
 <br/>
 
