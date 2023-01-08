@@ -79,7 +79,7 @@ Arguments:\
 `--chatID` - [Telegram](https://telegram.org) chat id\
 `--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) type of chat (adds '-' to `chatID` when `channel`)
 
-**Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
+> **Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
 \
 Example:
 ```json
