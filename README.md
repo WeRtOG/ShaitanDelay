@@ -34,6 +34,10 @@ Makes VST3 using _already builded_ UI from `build` to `dist` folder.
 
 Makes ZIP from last build and saves it to `dist` folder
 
+### `npm run make-ssl`
+
+Makes SSL to `.cert` folder (**required** before first build)
+
 ### `npm run publish`
 
 Publishes last build to Telegram\
@@ -54,10 +58,6 @@ Example:
 ```
 \
 ... And then only the `npm run publish` command without arguments will be enough to publish
-
-### `npm run make-ssl`
-
-Makes SSL to `.cert` folder
 
 ## Available Scripts (Win)
 
