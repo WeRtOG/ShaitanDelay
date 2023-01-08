@@ -1,5 +1,5 @@
 {
-    "name": "elementary-test",
+    "name": "shaitan-delay",
     "version": "0.1.0",
     "homepage": ".",
     "private": true,
@@ -22,17 +22,17 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
-        "pack": "npx elem-export --outputDir=dist --manifest=build/elementary.config.json build/",
+        "build": "concurrently -m 1 -p none \"npm run build-ui\" \"npm run build-vst\" \"npm run make-zip\"",
+        "build-ui": "react-scripts build",
+        "build-vst": "npx elem-export --outputDir=dist --manifest=build/elementary.config.json build/",
         "make-zip": "bash ./dev/makeZIP.sh",
         "make-ssl": "bash ./dev/generateSSL.sh",
-        "build-pack": "concurrently -m 1 -p none \"npm run build\" \"npm run pack\" \"npm run make-zip\"",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "win-uninstall": "cd dev && uninstallDist.bat",
         "win-install": "cd dev && installDist.bat",
+        "win-uninstall": "cd dev && uninstallDist.bat",
         "win-update": "cd dev && reinstallDist.bat",
-        "win-build-pack-update": "concurrently -m 1 -p none \"npm run build-pack\" \"npm run win-update\""
+        "win-build-update": "concurrently -m 1 -p none \"npm run build\" \"npm run win-update\""
     },
     "eslintConfig": {
         "extends": [
