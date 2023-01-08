@@ -3,18 +3,13 @@
 
 # Shaitan DELAY (VST3 Win/Mac)
 
-Delay plugin capable of creating magic ✨🐾
-<br/><br/>
+Delay plugin capable of creating magic ✨🐾\
+The latest builds of our plugin you can download **from our Telegram channel**: [@shaitandelay](https://shaitandelay.t.me/)
+
+<br/>
+<br/>
 </div>
 <br/><br/>
-
-## Installation (source)
-
-```
-npm install
-npx elem-copy-binaries
-npm run make-ssl
-```
 
 ## Build installation (Windows)
 
@@ -23,6 +18,14 @@ npm run make-ssl
 -   To uninstall the plugin from the system, use this `uninstall.bat`
 
 <br/>
+
+## Installation (source)
+
+```
+npm install
+npx elem-copy-binaries
+npm run make-ssl
+```
 
 ## Available Scripts (Win/Mac)
 
