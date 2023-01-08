@@ -59,10 +59,6 @@ Example:
 
 Makes SSL to `.cert` folder
 
-### `npm run win-install`
-
-The command to install _builded_ VST3 plugin on Windows
-
 ## Available Scripts (Win)
 
 ### `npm run win-uninstall`
