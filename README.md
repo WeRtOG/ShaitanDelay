@@ -3,9 +3,8 @@
 
 # Shaitan DELAY (VST3 Win/Mac)
 
-Delay plugin capable of creating magic ✨🐾
-
-> The latest builds of our plugin you can download in our Telegram channel: [@shaitandelay](https://shaitandelay.t.me/)
+Delay plugin capable of creating magic ✨🐾\
+The latest builds of our plugin you can download **from our Telegram channel**: [@shaitandelay](https://shaitandelay.t.me/)
 
 <br/>
 <br/>
