@@ -42,10 +42,10 @@ Arguments:\
 `--token` - [Telegram API](https://core.telegram.org/bots/api) token\
 `--chatID` - [Telegram](https://telegram.org) ChatID\
 `--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) Type of ChatID (adds '-' to `chatID` when `channel`)\
-\
+
 **Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
 \
-Example:\
+Example:
 ```json
 {
     "token": "YOUR_TELEGRAM_TOKEN",
