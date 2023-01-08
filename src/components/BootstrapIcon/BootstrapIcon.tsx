@@ -7,10 +7,7 @@ export interface IBootstrapIcon {
     onClick?: MouseEventHandler<HTMLElement>;
 }
 
-export function BootstrapIcon({
-    ariaHidden = true,
-    ...props
-}: IBootstrapIcon) {
+export function BootstrapIcon({ ariaHidden = true, ...props }: IBootstrapIcon) {
     return (
         <i
             aria-hidden={ariaHidden ? true : undefined}

@@ -17,10 +17,13 @@ export class WindowProps {
         this.props = props;
     }
 
-    public onPropertyChange(propertyName: string, handler: CallableFunction): void {
+    public onPropertyChange(
+        propertyName: string,
+        handler: CallableFunction
+    ): void {
         this.handlers.push({
             propertyName: propertyName,
-            handler: handler
+            handler: handler,
         });
     }
 
@@ -29,17 +32,17 @@ export class WindowProps {
     }
 
     public setPropertyValue(propertyName: string, value: any): void {
-        this.props.forEach(prop => {
+        this.props.forEach((prop) => {
             if (prop.name === propertyName && prop.value !== value) {
                 prop.value = value;
 
-                this.genericHandlers.forEach(handler => {
+                this.genericHandlers.forEach((handler) => {
                     handler(prop);
                 });
             }
         });
 
-        this.handlers.forEach(handler => {
+        this.handlers.forEach((handler) => {
             if (handler.propertyName === propertyName) {
                 handler.handler(value);
             }
@@ -47,9 +50,11 @@ export class WindowProps {
     }
 
     public getPropertyValue(propertyName: string): any | null {
-        return this.props.find(prop => {
-            return prop.name === propertyName;
-        })?.value ?? null;
+        return (
+            this.props.find((prop) => {
+                return prop.name === propertyName;
+            })?.value ?? null
+        );
     }
 
     public getAllProps(): WindowProperty[] {
@@ -57,6 +62,6 @@ export class WindowProps {
     }
 
     public getAllPropsExcept(propertyName: string) {
-        return this.props.filter(prop => prop.name !== propertyName);
+        return this.props.filter((prop) => prop.name !== propertyName);
     }
 }

@@ -6,10 +6,14 @@ import { PlayheadEvent } from '../interfaces/PlayheadEvent';
 import FX from './FX';
 
 export class PluginCore {
+    private coreNeedsRerender = false;
+    private dawPropertiesChangeLoadingEnabled = true;
+
     private rerenderCore() {
         let sampleRate = 48000;
 
-        let delayMode = window.props.getPropertyValue('delayMode') ?? DelayMode.Stereo;
+        let delayMode =
+            window.props.getPropertyValue('delayMode') ?? DelayMode.Stereo;
         let delayTime = window.props.getPropertyValue('delayTime') ?? 0;
         let delayFeedback = window.props.getPropertyValue('delayFeedback') ?? 0;
         let dryLevel = window.props.getPropertyValue('dryLevel') ?? 1;
@@ -50,7 +54,9 @@ export class PluginCore {
             cutoff * 5000,
             1,
             fx.flanger(
-                rightMSOffset === 0 ? tailRight : fx.fbdelay(rightMSOffset, 0, tailRight),
+                rightMSOffset === 0
+                    ? tailRight
+                    : fx.fbdelay(rightMSOffset, 0, tailRight),
                 bpm,
                 0.4
             )
@@ -71,32 +77,38 @@ export class PluginCore {
         core.render(meterLeft, meterRight);
     }
 
-    public init() {
+    public getDawPropertiesChangeLoadingEnabled(): boolean {
+        return this.dawPropertiesChangeLoadingEnabled;
+    }
 
+    public setDawPropertiesChangeLoadingEnabled(enabled: boolean) {
+        this.dawPropertiesChangeLoadingEnabled = enabled;
+    }
+
+    public init() {
         core.on('playhead', function (e: PlayheadEvent) {
             window.props.setPropertyValue('bpm', e.bpm);
         });
 
-        let coreNeedToBeUpdated = false;
-
         window.props.onChange((prop: WindowProperty) => {
-            coreNeedToBeUpdated = true;
+            this.coreNeedsRerender = true;
 
             let state = {} as any;
 
-            window.props.getAllPropsExcept('bpm').forEach(prop => {
+            window.props.getAllPropsExcept('bpm').forEach((prop) => {
                 state[prop.name] = prop.value;
             });
 
-            console.log(state);
+            if (!this.dawPropertiesChangeLoadingEnabled)
+                core.dispatch('setParameterValue', prop);
 
             core.dispatch('saveState', JSON.stringify(state));
         });
 
         setInterval(() => {
-            if (coreNeedToBeUpdated) {
+            if (this.coreNeedsRerender) {
                 this.rerenderCore();
-                coreNeedToBeUpdated = false;
+                this.coreNeedsRerender = false;
             }
         }, 100);
 
@@ -109,25 +121,27 @@ export class PluginCore {
             }*/
         });
         core.on('parameterValueChange', (e) => {
-            if (e.paramId === 'delayMode')
-                e.value = Math.ceil(e.value * 2);
+            if (this.dawPropertiesChangeLoadingEnabled) {
+                if (e.paramId === 'delayMode') e.value = Math.ceil(e.value * 2);
 
-            window.props.setPropertyValue(e.paramId, e.value);
+                window.props.setPropertyValue(e.paramId, e.value);
+            }
         });
         core.on('loadState', (e) => {
             let parsedData = JSON.parse(e.value);
 
             if (parsedData) {
-                window.props.setPropertyValue('delayMode', parsedData?.delayMode ?? window.props.getPropertyValue('delayMode'));
-                window.props.setPropertyValue('delayTime', parsedData?.delayTime ?? window.props.getPropertyValue('delayTime'));
-                window.props.setPropertyValue('delayFeedback', parsedData?.delayFeedback ?? window.props.getPropertyValue('delayFeedback'));
-                window.props.setPropertyValue('dryLevel', parsedData?.dryLevel ?? window.props.getPropertyValue('dryLevel'));
-                window.props.setPropertyValue('wetLevel', parsedData?.wetLevel ?? window.props.getPropertyValue('wetLevel'));
-                window.props.setPropertyValue('cutoff', parsedData?.cutoff ?? window.props.getPropertyValue('cutoff'));
+                Object.keys(parsedData).forEach((key) => {
+                    window.props.setPropertyValue(
+                        key,
+                        parsedData[key] ?? window.props.getPropertyValue(key)
+                    );
+                });
             }
 
             this.rerenderCore();
         });
+
         core.on('load', () => {
             this.rerenderCore();
             core.dispatch('resize', { width: 880, height: 550 });

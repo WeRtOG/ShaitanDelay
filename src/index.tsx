@@ -23,40 +23,40 @@ if (rootElement) {
 declare global {
     interface Window {
         props: WindowProps;
+        pluginCore: PluginCore;
     }
 }
 
 window.props = new WindowProps([
     {
         name: 'bpm',
-        value: 140
+        value: 140,
     },
     {
         name: 'delayMode',
-        value: DelayMode.Stereo
+        value: DelayMode.Stereo,
     },
     {
         name: 'delayTime',
-        value: 0.5
+        value: 0.5,
     },
     {
         name: 'delayFeedback',
-        value: 0.6
+        value: 0.6,
     },
     {
         name: 'dryLevel',
-        value: 1
+        value: 1,
     },
     {
         name: 'wetLevel',
-        value: 0.5
+        value: 0.5,
     },
     {
         name: 'cutoff',
-        value: 1
-    }
+        value: 1,
+    },
 ]);
 
-let pluginCore = new PluginCore();
-
-pluginCore.init();
+window.pluginCore = new PluginCore();
+window.pluginCore.init();

@@ -19,7 +19,10 @@ function onError(error) {
 
 async function isTokenValid(token) {
     try {
-        let response = await axios.get('https://api.telegram.org/bot' + token + '/getMe', { validateStatus: false });
+        let response = await axios.get(
+            'https://api.telegram.org/bot' + token + '/getMe',
+            { validateStatus: false }
+        );
         let result = response.data;
 
         return result.ok;
@@ -65,24 +68,30 @@ async function main() {
 
         if (tokenValid !== null) {
             if (chatID) {
-                let telegramAPI = "https://api.telegram.org/bot" + token;
+                let telegramAPI = 'https://api.telegram.org/bot' + token;
                 try {
                     const formData = new FormData();
 
-                    if (isChannel)
-                        chatID = '-' + chatID;
+                    if (isChannel) chatID = '-' + chatID;
 
                     console.log('⏳ Uploading to Telegram... Please wait');
 
                     formData.append('chat_id', chatID);
                     formData.append('document', fs.createReadStream(zip));
-                    formData.append('caption', "*🔮 Build hash: *\n#" + md5(Date.now().toString()));
-                    formData.append('parse_mode', 'markdown')
+                    formData.append(
+                        'caption',
+                        '*🔮 Build hash: *\n#' + md5(Date.now().toString())
+                    );
+                    formData.append('parse_mode', 'markdown');
 
-                    const response = await axios.post(`${telegramAPI}/sendDocument`, formData, {
-                        headers: formData.getHeaders(),
-                        validateStatus: false
-                    });
+                    const response = await axios.post(
+                        `${telegramAPI}/sendDocument`,
+                        formData,
+                        {
+                            headers: formData.getHeaders(),
+                            validateStatus: false,
+                        }
+                    );
 
                     if (response?.data) {
                         if (response.data.ok) {
@@ -108,7 +117,6 @@ async function main() {
         } else {
             console.log('⚠️  Token is invalid.');
         }
-
     } else {
         console.log('⚠️  Token is empty.');
     }
@@ -117,4 +125,3 @@ async function main() {
 }
 
 main();
-

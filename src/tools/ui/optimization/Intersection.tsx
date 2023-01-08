@@ -1,6 +1,9 @@
 import { RefObject, useEffect, useState } from 'react';
 
-export const useIntersection = (ref: RefObject<HTMLElement>, rootMargin: string) => {
+export const useIntersection = (
+    ref: RefObject<HTMLElement>,
+    rootMargin: string
+) => {
     const [isVisible, setState] = useState(false);
 
     useEffect(() => {

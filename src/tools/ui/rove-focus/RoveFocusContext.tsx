@@ -8,7 +8,8 @@ export interface RoveFocusContextData {
     isInTestMode: boolean;
 }
 
-export const RoveFocusContext =
-    createContext<RoveFocusContextData | null>(null);
+export const RoveFocusContext = createContext<RoveFocusContextData | null>(
+    null
+);
 
 export const useRoveFocusContext = () => useContext(RoveFocusContext);

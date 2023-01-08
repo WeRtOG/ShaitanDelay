@@ -1,7 +1,7 @@
 .items-switch {
     margin-top: 1rem;
     display: flex;
-    background-color: rgba(255,255,255,.05);
+    background-color: rgba(255, 255, 255, 0.05);
     width: fit-content;
     border-radius: 10px;
     box-sizing: border-box;
@@ -27,25 +27,24 @@
         margin: 5px;
         outline-color: transparent;
         outline-offset: 0px;
-        color: rgba(255,255,255,.5);
+        color: rgba(255, 255, 255, 0.5);
 
         .bi + .title {
             margin-left: 8px;
         }
 
-        
         &.error {
             background-color: transparent;
             color: var(--ui-text);
             box-shadow: initial;
 
             .bi {
-                color: var(--ui-error)
+                color: var(--ui-error);
             }
         }
 
         &.checked {
-            background-color: rgba(255,255,255,.1);
+            background-color: rgba(255, 255, 255, 0.1);
             color: var(--ui-text-invert);
             outline-color: var(--ui-accent);
             outline-offset: 3px;

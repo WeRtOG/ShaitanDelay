@@ -5,35 +5,53 @@ import { ItemsSwitch } from './components/ItemsSwitch/ItemsSwitch';
 import { DelayMode } from './enums/DelayMode';
 
 function App() {
-    const [delayMode, setDelayMode] = useState<DelayMode>(window.props.getPropertyValue('delayMode'));
-    const [delayTime, setDelayTime] = useState<number>(window.props.getPropertyValue('delayTime'));
-    const [delayFeedback, setDelayFeedback] = useState<number>(window.props.getPropertyValue('delayFeedback'));
-    const [dryLevel, setDryLevel] = useState<number>(window.props.getPropertyValue('dryLevel'));
-    const [wetLevel, setWetLevel] = useState<number>(window.props.getPropertyValue('wetLevel'));
-    const [cutoff, setCutoff] = useState<number>(window.props.getPropertyValue('cutoff'));
+    const [delayMode, setDelayMode] = useState<DelayMode>(
+        window.props.getPropertyValue('delayMode')
+    );
+    const [delayTime, setDelayTime] = useState<number>(
+        window.props.getPropertyValue('delayTime')
+    );
+    const [delayFeedback, setDelayFeedback] = useState<number>(
+        window.props.getPropertyValue('delayFeedback')
+    );
+    const [dryLevel, setDryLevel] = useState<number>(
+        window.props.getPropertyValue('dryLevel')
+    );
+    const [wetLevel, setWetLevel] = useState<number>(
+        window.props.getPropertyValue('wetLevel')
+    );
+    const [cutoff, setCutoff] = useState<number>(
+        window.props.getPropertyValue('cutoff')
+    );
 
     useEffect(() => {
-        window.props.setPropertyValue('delayMode', delayMode);
+        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
+            window.props.setPropertyValue('delayMode', delayMode);
     }, [delayMode]);
 
     useEffect(() => {
-        window.props.setPropertyValue('delayTime', delayTime);
+        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
+            window.props.setPropertyValue('delayTime', delayTime);
     }, [delayTime]);
 
     useEffect(() => {
-        window.props.setPropertyValue('delayFeedback', delayFeedback);
+        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
+            window.props.setPropertyValue('delayFeedback', delayFeedback);
     }, [delayFeedback]);
 
     useEffect(() => {
-        window.props.setPropertyValue('dryLevel', dryLevel);
+        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
+            window.props.setPropertyValue('dryLevel', dryLevel);
     }, [dryLevel]);
 
     useEffect(() => {
-        window.props.setPropertyValue('wetLevel', wetLevel);
+        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
+            window.props.setPropertyValue('wetLevel', wetLevel);
     }, [wetLevel]);
 
     useEffect(() => {
-        window.props.setPropertyValue('cutoff', cutoff);
+        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
+            window.props.setPropertyValue('cutoff', cutoff);
     }, [cutoff]);
 
     useEffect(() => {
@@ -60,19 +78,13 @@ function App() {
         window.props.onPropertyChange('cutoff', (value: number) => {
             setCutoff(value);
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div className='App'>
             <header className='App-header'>
-                <img
-                    src={
-                        'logo.png'
-                    }
-                    className='App-logo'
-                    alt='logo'
-                />
+                <img src={'logo.png'} className='App-logo' alt='logo' />
                 <h3>
                     SHAITAN<span>DELAY</span>
                 </h3>
@@ -85,37 +97,82 @@ function App() {
                         value={delayTime}
                         color={1}
                         onChange={(newValue: number) => setDelayTime(newValue)}
+                        onActivityChange={(active: boolean) =>
+                            window.pluginCore.setDawPropertiesChangeLoadingEnabled(
+                                !active
+                            )
+                        }
                     />
                     <BigKnob
                         title='Feedback'
                         value={delayFeedback}
                         color={2}
-                        onChange={(newValue: number) => setDelayFeedback(newValue)}
+                        onChange={(newValue: number) =>
+                            setDelayFeedback(newValue)
+                        }
+                        onActivityChange={(active: boolean) =>
+                            window.pluginCore.setDawPropertiesChangeLoadingEnabled(
+                                !active
+                            )
+                        }
                     />
                     <BigKnob
                         title='Dry'
                         value={dryLevel}
                         color={3}
                         onChange={(newValue: number) => setDryLevel(newValue)}
+                        onActivityChange={(active: boolean) =>
+                            window.pluginCore.setDawPropertiesChangeLoadingEnabled(
+                                !active
+                            )
+                        }
                     />
                     <BigKnob
                         title='Wet'
                         value={wetLevel}
                         color={4}
                         onChange={(newValue: number) => setWetLevel(newValue)}
+                        onActivityChange={(active: boolean) =>
+                            window.pluginCore.setDawPropertiesChangeLoadingEnabled(
+                                !active
+                            )
+                        }
                     />
                     <BigKnob
                         title='Cutoff'
                         value={cutoff}
                         color={5}
                         onChange={(newValue: number) => setCutoff(newValue)}
+                        onActivityChange={(active: boolean) =>
+                            window.pluginCore.setDawPropertiesChangeLoadingEnabled(
+                                !active
+                            )
+                        }
                     />
                 </div>
-                <ItemsSwitch onChange={(value) => setDelayMode(value as DelayMode ?? DelayMode.Mono)} value={delayMode} items={[
-                    { value: DelayMode.Mono, title: 'Mono', icon: 'circle' },
-                    { value: DelayMode.Stereo, title: 'Stereo', icon: 'circle-half' },
-                    { value: DelayMode.PingPong, title: 'Ping-pong', icon: 'circle-fill' },
-                ]} />
+                <ItemsSwitch
+                    onChange={(value) =>
+                        setDelayMode((value as DelayMode) ?? DelayMode.Mono)
+                    }
+                    value={delayMode}
+                    items={[
+                        {
+                            value: DelayMode.Mono,
+                            title: 'Mono',
+                            icon: 'circle',
+                        },
+                        {
+                            value: DelayMode.Stereo,
+                            title: 'Stereo',
+                            icon: 'circle-half',
+                        },
+                        {
+                            value: DelayMode.PingPong,
+                            title: 'Ping-pong',
+                            icon: 'circle-fill',
+                        },
+                    ]}
+                />
             </header>
         </div>
     );

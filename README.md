@@ -13,9 +13,9 @@ npm run make-ssl
 
 ## Build installation (Windows)
 
-- Unpack the zip file of VST3 build
-- Run `install.bat` if the plugin has not been installed before, or `update.bat` if it has already been installed
-- To uninstall the plugin from the system, use this `uninstall.bat`
+-   Unpack the zip file of VST3 build
+-   Run `install.bat` if the plugin has not been installed before, or `update.bat` if it has already been installed
+-   To uninstall the plugin from the system, use this `uninstall.bat`
 
 <br/>
 
@@ -77,12 +77,14 @@ Arguments:\
 **Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
 \
 Example:
+
 ```json
 {
     "token": "YOUR_TELEGRAM_TOKEN",
     "chatID": "YOUR_CHAT_ID"
 }
 ```
+
 \
 ... And then only the `npm run publish` command without arguments will be enough to publish
 

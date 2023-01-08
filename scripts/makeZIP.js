@@ -1,7 +1,9 @@
 const fs = require('fs');
 const archiver = require('archiver');
 
-var output = fs.createWriteStream('./dist/ShaitanDelay-build-' + Date.now() + '.zip');
+var output = fs.createWriteStream(
+    './dist/ShaitanDelay-build-' + Date.now() + '.zip'
+);
 var archive = archiver('zip');
 
 output.on('close', function () {
@@ -10,7 +12,7 @@ output.on('close', function () {
     console.log('');
 });
 
-archive.on('error', function(err){
+archive.on('error', function (err) {
     throw err;
 });
 

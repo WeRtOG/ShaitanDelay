@@ -9,6 +9,7 @@ export interface IBigKnob {
     movementPowerAdjust?: number;
     color?: 1 | 2 | 3 | 4 | 5;
     onChange: (newValue: number) => void;
+    onActivityChange?: (active: boolean) => void;
 }
 export default function BigKnob(props: IBigKnob) {
     const knobMainRef = createRef<HTMLDivElement>();
@@ -22,6 +23,8 @@ export default function BigKnob(props: IBigKnob) {
         setIsDragging(true);
         setDragStartY(e.clientY);
         setDragStartValue(props.value);
+
+        if (props.onActivityChange) props.onActivityChange(true);
     }
 
     function onMouseMove(e: MouseEvent) {
@@ -29,7 +32,7 @@ export default function BigKnob(props: IBigKnob) {
             let newValue =
                 dragStartValue +
                 ((dragStartY - e.clientY) * (props.movementPowerAdjust ?? 1)) /
-                500;
+                    500;
 
             if (newValue < 0) {
                 newValue = 0;
@@ -49,6 +52,8 @@ export default function BigKnob(props: IBigKnob) {
 
     function onMouseUp(e: MouseEvent) {
         setIsDragging(false);
+
+        if (props.onActivityChange) props.onActivityChange(false);
     }
 
     useEffect(() => {
@@ -68,7 +73,7 @@ export default function BigKnob(props: IBigKnob) {
     if (deg < -140) deg = -140;
     if (deg > 140) deg = 140;
 
-    let colorHue = 260 + ((props.color ?? 1) * 10);
+    let colorHue = 260 + (props.color ?? 1) * 10;
     return (
         <div className='big-knob-container'>
             <div
@@ -97,7 +102,10 @@ export default function BigKnob(props: IBigKnob) {
                                         198 - props.value * 198 + 'px',
                                     opacity: 0.5 + 0.5 * props.value,
                                     stroke: 'hsl(' + colorHue + ', 100%, 50%)',
-                                    filter: 'drop-shadow(0px 0px 5px hsla(' + colorHue + ', 100%, 50%, 0.3))'
+                                    filter:
+                                        'drop-shadow(0px 0px 5px hsla(' +
+                                        colorHue +
+                                        ', 100%, 50%, 0.3))',
                                 }}
                                 fill='none'
                                 d='M30,90 A40,40 0 1,1 80,90'
