@@ -36,23 +36,23 @@ Makes ZIP from last build and saves it to `dist` folder
 
 ### `npm run publish`
 
-Publishes last build to Telegram
-
-Arguments:
-`--token` - [Telegram API](https://core.telegram.org/bots/api) token
-`--chatID` - [Telegram](https://telegram.org) ChatID
-`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) Type of ChatID (adds '-' to `chatID` when `channel`)
-
-*Note: * you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time
-
-Example:
+Publishes last build to Telegram\
+\
+Arguments:\
+`--token` - [Telegram API](https://core.telegram.org/bots/api) token\
+`--chatID` - [Telegram](https://telegram.org) ChatID\
+`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) Type of ChatID (adds '-' to `chatID` when `channel`)\
+\
+**Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
+\
+Example:\
 ```json
 {
     "token": "YOUR_TELEGRAM_TOKEN",
     "chatID": ""
 }
 ```
-
+\
 ... And then only the `npm run publish` command without arguments will be enough to publish
 
 ### `npm run make-ssl`
