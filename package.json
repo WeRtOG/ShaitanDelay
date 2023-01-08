@@ -30,7 +30,7 @@
         "build-vst": "concurrently -m 1 -p none \"node ./scripts/preBuild.js\" \"npx elem-export --outputDir=dist --manifest=build/elementary.config.json build/\"",
         "publish": "node ./scripts/publish.js",
         "make-zip": "node ./scripts/makeZIP.js",
-        "make-ssl": "bash ./dev/generateSSL.sh",
+        "make-ssl": "bash ./dev/makeSSL.sh",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "win-install": "cd dev && installDist.bat",

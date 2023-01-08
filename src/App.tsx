@@ -68,7 +68,7 @@ function App() {
             <header className='App-header'>
                 <img
                     src={
-                        'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/570c38db-b922-4261-bc53-2d9152ba7c03/d7s2zft-696a3d25-ec63-4dfe-bc1d-8038c137bcd2.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU3MGMzOGRiLWI5MjItNDI2MS1iYzUzLTJkOTE1MmJhN2MwM1wvZDdzMnpmdC02OTZhM2QyNS1lYzYzLTRkZmUtYmMxZC04MDM4YzEzN2JjZDIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.LtxKWW74CaUcpySg2EGy9NVjSE6iBEiQh3xJ62lsPbc'
+                        'logo.png'
                     }
                     className='App-logo'
                     alt='logo'
