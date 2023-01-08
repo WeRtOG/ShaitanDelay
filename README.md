@@ -1,6 +1,11 @@
+<div align="center">
+<img alt="Plug-in screenshot" src="https://github.com/WeRtOG/ShaitanDelay/blob/main/.github/PluginScreenshot.png?raw=true" width="500" />
+
 # Shaitan DELAY (VST3 Win/Mac)
 
 Delay plugin capable of creating magic ✨🐾
+<br/><br/>
+</div>
 <br/><br/>
 
 ## Installation (source)
