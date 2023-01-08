@@ -106,13 +106,19 @@ The command to update _builded_ VST3 plugin on Windows
 
 The command to build and install VST3 plugin on Windows
 
+<br/>
+
 ### `npm run win-build-install-publish`
 
 The command to build, install and publish VST3 plugin on Windows
 
+<br/>
+
 ### `npm run win-build-update`
 
 The command to build and update VST3 plugin on Windows
+
+<br/>
 
 ### `npm run win-build-update-publish`
 
