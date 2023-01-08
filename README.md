@@ -28,11 +28,32 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ### `npm run build-vst`
 
-Makes VST3 using *already builded* UI from `build` to `dist` folder.
+Makes VST3 using _already builded_ UI from `build` to `dist` folder.
 
 ### `npm run make-zip`
 
 Makes ZIP from last build and saves it to `dist` folder
+
+### `npm run publish`
+
+Publishes last build to Telegram
+
+Arguments:
+`--token` - [Telegram API](https://core.telegram.org/bots/api) token
+`--chatID` - [Telegram](https://telegram.org) ChatID
+`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) Type of ChatID (adds '-' to `chatID` when `channel`)
+
+*Note: * you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time
+
+Example:
+```json
+{
+    "token": "YOUR_TELEGRAM_TOKEN",
+    "chatID": ""
+}
+```
+
+... And then only the `npm run publish` command without arguments will be enough to publish
 
 ### `npm run make-ssl`
 
@@ -40,17 +61,17 @@ Makes SSL to `.cert` folder
 
 ### `npm run win-install`
 
-The command to install *builded* VST3 plugin on Windows
+The command to install _builded_ VST3 plugin on Windows
 
 ## Available Scripts (Win)
 
 ### `npm run win-uninstall`
 
-The command to uninstall *builded* VST3 plugin on Windows
+The command to uninstall _builded_ VST3 plugin on Windows
 
 ### `npm run win-update`
 
-The command to update *builded* VST3 plugin on Windows
+The command to update _builded_ VST3 plugin on Windows
 
 ### `npm run win-build-update`
 

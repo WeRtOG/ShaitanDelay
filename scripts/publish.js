@@ -29,10 +29,11 @@ async function isTokenValid(token) {
 }
 
 async function main() {
-    let zip = './dist/ShaitanDelayLatest.zip';
+    const zip = './dist/ShaitanDelayLatest.zip';
+    const configPath = './publish.config.json';
 
-    if(!fs.existsSync(zip)) {
-        console.log('⚠️  ZIP-file not found.');
+    if (!fs.existsSync(zip)) {
+        console.log('⚠️  ZIP-build not found.');
         console.log('');
         process.exit();
     }
@@ -40,6 +41,16 @@ async function main() {
     let token = process.argv[2] ?? null;
     let chatID = process.argv[3] ?? null;
     let isChannel = process.argv[4] ? process.argv[4] === 'channel' : false;
+
+    if (token === null && chatID === null) {
+        if (fs.existsSync(configPath)) {
+            let rawdata = fs.readFileSync(configPath);
+            let config = JSON.parse(rawdata);
+
+            token = config?.token ?? null;
+            chatID = config?.chatID ?? null;
+        }
+    }
 
     if (token !== null) {
         let tokenValid = await isTokenValid(token);
