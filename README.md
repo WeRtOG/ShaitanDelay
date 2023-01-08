@@ -1,6 +1,11 @@
+<div align="center">
+<img alt="Plug-in screenshot" src="https://github.com/WeRtOG/ShaitanDelay/blob/main/.github/PluginScreenshot.png?raw=true" width="500" />
+
 # Shaitan DELAY (VST3 Win/Mac)
 
 Delay plugin capable of creating magic ✨🐾
+<br/><br/>
+</div>
 <br/><br/>
 
 ## Installation (source)
@@ -72,9 +77,9 @@ Publishes last build from `dist` to Telegram\
 Arguments:\
 `--token` - [Telegram API](https://core.telegram.org/bots/api) token\
 `--chatID` - [Telegram](https://telegram.org) chat id\
-`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) type of chat (adds '-' to `chatID` when `channel`)\
+`--type` (can be `default` or `channel`) - [Telegram](https://telegram.org) type of chat (adds '-' to `chatID` when `channel`)
 
-**Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
+> **Note:** you can also create your local `publish.config.json` so that you don't have to write all the parameters manually every time\
 \
 Example:
 
