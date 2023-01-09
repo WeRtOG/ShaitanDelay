@@ -28,8 +28,7 @@ function App() {
     );
 
     useEffect(() => {
-        if (!window.pluginCore.getDawPropertiesChangeLoadingEnabled())
-            window.props.setPropertyValue('delayMode', delayMode);
+        window.props.setPropertyValue('delayMode', delayMode);
     }, [delayMode]);
 
     useEffect(() => {
@@ -94,7 +93,7 @@ function App() {
                 <div className='main-knobs'>
                     <BigKnob
                         title='Time'
-                        step={0.125}
+                        step={1 / 16}
                         smooth={true}
                         movementPowerAdjust={3}
                         value={delayTime}

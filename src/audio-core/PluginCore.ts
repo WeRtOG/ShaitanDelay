@@ -28,8 +28,11 @@ export class PluginCore {
     }
 
     private rerenderCore() {
-        if(!this.coreReady) {
-            ConsoleTools.warn('Core can\'t be rendered because it\'s not initialized.', consolePlaceTag);
+        if (!this.coreReady) {
+            ConsoleTools.warn(
+                "Core can't be rendered because it's not initialized.",
+                consolePlaceTag
+            );
             return;
         }
 
@@ -45,7 +48,7 @@ export class PluginCore {
         let dryLeft = elementary.in({ channel: 0 });
         let dryRight = elementary.in({ channel: 1 });
 
-        let delayMS = this.simpleFX.bpm2ms(bpm, 0.01 + delayTime * 0.99);
+        let delayMS = this.simpleFX.bpm2ms(bpm, 0.01 + delayTime * 1.99);
 
         let rightMSOffset = 0;
 
@@ -61,25 +64,42 @@ export class PluginCore {
                 break;
         }
 
-        let tailLeft = this.simpleFX.fbdelay(delayMS, delayFeedback, dryLeft);
-        let tailRight = this.simpleFX.fbdelay(delayMS, delayFeedback, dryRight);
+        let wetLeft = this.simpleFX.fbdelay(delayMS, delayFeedback, dryLeft);
+        let wetRight = this.simpleFX.fbdelay(delayMS, delayFeedback, dryRight);
 
-        let wetLeft = elementary.lowpass(
-            cutoff * 5000,
-            1,
-            this.simpleFX.flanger(tailLeft, bpm, 0.4)
+        wetLeft = this.simpleFX.flanger(wetLeft, bpm, 0.2);
+        wetRight = this.simpleFX.flanger(
+            rightMSOffset === 0
+                ? wetRight
+                : this.simpleFX.fbdelay(rightMSOffset, 0, wetRight),
+            bpm,
+            0.2
         );
-        let wetRight = elementary.lowpass(
-            cutoff * 5000,
-            1,
-            this.simpleFX.flanger(
-                rightMSOffset === 0
-                    ? tailRight
-                    : this.simpleFX.fbdelay(rightMSOffset, 0, tailRight),
-                bpm,
-                0.4
-            )
+
+        let convolvedTailLeft = elementary.convolve(
+            {
+                path: 'D:/lab/shaitan-delay/public/test.wav',
+            },
+            wetLeft
         );
+        let convolvedTailRight = elementary.convolve(
+            {
+                path: 'D:/lab/shaitan-delay/public/test.wav',
+            },
+            wetRight
+        );
+
+        wetLeft = elementary.add(
+            elementary.mul(0.04, convolvedTailLeft),
+            wetLeft
+        );
+        wetRight = elementary.add(
+            elementary.mul(0.04, convolvedTailRight),
+            wetRight
+        );
+
+        wetLeft = elementary.lowpass(cutoff * 5000, 1, wetLeft);
+        wetRight = elementary.lowpass(cutoff * 5000, 1, wetRight);
 
         let mixedLeft = elementary.add(
             elementary.mul(wetLevel, wetLeft),
@@ -119,7 +139,10 @@ export class PluginCore {
         });
 
         window.props.onChange((prop: WindowProperty) => {
-            ConsoleTools.log('Global prop "' + prop.name + '" changed to ' + prop.value, consolePlaceTag);
+            ConsoleTools.log(
+                "Global prop '" + prop.name + "' changed to " + prop.value,
+                consolePlaceTag
+            );
 
             this.coreNeedsRerender = true;
 
@@ -155,7 +178,13 @@ export class PluginCore {
         });
         core.on('parameterValueChange', (e) => {
             if (this.dawPropertiesChangeLoadingEnabled) {
-                ConsoleTools.log('Received update from DAW for property "' + e.paramId + '". Value: "' + e.value, consolePlaceTag);
+                ConsoleTools.log(
+                    'Received update from DAW for property "' +
+                        e.paramId +
+                        '". Value: "' +
+                        e.value,
+                    consolePlaceTag
+                );
 
                 if (e.paramId === 'delayMode') e.value = Math.ceil(e.value * 2);
 
@@ -165,7 +194,11 @@ export class PluginCore {
         core.on('loadState', (e) => {
             let parsedData = JSON.parse(e.value);
 
-            ConsoleTools.log('Received state from DAW: ', consolePlaceTag, parsedData);
+            ConsoleTools.log(
+                'Received state from DAW: ',
+                consolePlaceTag,
+                parsedData
+            );
 
             if (parsedData) {
                 Object.keys(parsedData).forEach((key) => {
