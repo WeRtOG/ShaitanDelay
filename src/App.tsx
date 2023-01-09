@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
 import './App.scss';
+
+import { useEffect, useState } from 'react';
+
+import AlertWindow from './components/AlertWindow/AlertWindow';
 import BigKnob from './components/BigKnob/BigKnob';
-import { ItemsSwitch } from './components/ItemsSwitch/ItemsSwitch';
 import { DelayMode } from './enums/DelayMode';
+import { ItemsSwitch } from './components/ItemsSwitch/ItemsSwitch';
 
 function App() {
     const [delayMode, setDelayMode] = useState<DelayMode>(
@@ -82,9 +85,9 @@ function App() {
     }, []);
 
     return (
-        <div className='App'>
-            <header className='App-header'>
-                <img src={'logo.png'} className='App-logo' alt='logo' />
+        <div className='app'>
+            <div className='app-main'>
+                <img src={'logo.png'} className='app-logo' alt='logo' />
                 <h3>
                     SHAITAN<span>DELAY</span>
                 </h3>
@@ -173,7 +176,7 @@ function App() {
                         },
                     ]}
                 />
-            </header>
+            </div>
         </div>
     );
 }

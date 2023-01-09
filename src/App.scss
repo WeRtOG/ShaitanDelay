@@ -1,4 +1,4 @@
-.App {
+.app {
     text-align: center;
 
     * {
@@ -6,12 +6,12 @@
     }
 }
 
-.App-logo {
+.app-logo {
     height: 100px;
     pointer-events: none;
 }
 
-.App-header {
+.app-main {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@
     color: white;
 }
 
-.App-link {
+.app-link {
     color: #61dafb;
 }
 
