@@ -1,13 +1,12 @@
+import './index.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import App from './App';
+import { DelayMode } from './enums/DelayMode';
+import { PluginCore } from './audio-core/PluginCore';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-
-import { DelayMode } from './enums/DelayMode';
-
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { WindowProps } from './global/WindowProps';
-import { PluginCore } from './audio-core/PluginCore';
 
 let rootElement = document.getElementById('root');
 

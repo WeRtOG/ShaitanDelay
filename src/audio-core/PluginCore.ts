@@ -1,3 +1,5 @@
+import { ConsolePlaceTag, ConsoleTools } from '../tools/console';
+
 import { DelayMode } from '../enums/DelayMode';
 import { PlayheadEvent } from '../interfaces/PlayheadEvent';
 import SimpleFX from './SimpleFX';
@@ -5,7 +7,15 @@ import { WindowProperty } from '../global/WindowProps';
 import { default as core } from '@elemaudio/plugin-renderer';
 import { el as elementary } from '@elemaudio/core';
 
+let consolePlaceTag = new ConsolePlaceTag({
+    text: 'PluginCore',
+    background: 'black',
+    color: 'white',
+});
+
 export class PluginCore {
+    private coreReady = false;
+
     private coreNeedsRerender = false;
     private dawPropertiesChangeLoadingEnabled = true;
 
@@ -18,7 +28,13 @@ export class PluginCore {
     }
 
     private rerenderCore() {
-        let delayMode = window.props.getPropertyValue('delayMode') ?? DelayMode.Stereo;
+        if(!this.coreReady) {
+            ConsoleTools.warn('Core can\'t be rendered because it\'s not initialized.', consolePlaceTag);
+            return;
+        }
+
+        let delayMode =
+            window.props.getPropertyValue('delayMode') ?? DelayMode.Stereo;
         let delayTime = window.props.getPropertyValue('delayTime') ?? 0;
         let delayFeedback = window.props.getPropertyValue('delayFeedback') ?? 0;
         let dryLevel = window.props.getPropertyValue('dryLevel') ?? 1;
@@ -78,6 +94,8 @@ export class PluginCore {
         let meterRight = elementary.meter({ name: 'right' }, mixedRight);
 
         core.render(meterLeft, meterRight);
+
+        ConsoleTools.log('Audio core rendered', consolePlaceTag);
     }
 
     public getDawPropertiesChangeLoadingEnabled(): boolean {
@@ -85,7 +103,14 @@ export class PluginCore {
     }
 
     public setDawPropertiesChangeLoadingEnabled(enabled: boolean) {
-        this.dawPropertiesChangeLoadingEnabled = enabled;
+        if (enabled !== this.dawPropertiesChangeLoadingEnabled) {
+            this.dawPropertiesChangeLoadingEnabled = enabled;
+            ConsoleTools.log(
+                'DAW properties change event LOCK ' +
+                    (enabled ? 'disabled' : 'enabled'),
+                consolePlaceTag
+            );
+        }
     }
 
     public init() {
@@ -94,6 +119,8 @@ export class PluginCore {
         });
 
         window.props.onChange((prop: WindowProperty) => {
+            ConsoleTools.log('Global prop "' + prop.name + '" changed to ' + prop.value, consolePlaceTag);
+
             this.coreNeedsRerender = true;
 
             let state = {} as any;
@@ -102,10 +129,13 @@ export class PluginCore {
                 state[prop.name] = prop.value;
             });
 
-            if (!this.dawPropertiesChangeLoadingEnabled)
+            if (!this.dawPropertiesChangeLoadingEnabled) {
                 core.dispatch('setParameterValue', prop);
+                ConsoleTools.log('Changes sended to DAW', consolePlaceTag);
+            }
 
             core.dispatch('saveState', JSON.stringify(state));
+            ConsoleTools.log('State sended to DAW', consolePlaceTag);
         });
 
         setInterval(() => {
@@ -125,6 +155,8 @@ export class PluginCore {
         });
         core.on('parameterValueChange', (e) => {
             if (this.dawPropertiesChangeLoadingEnabled) {
+                ConsoleTools.log('Received update from DAW for property "' + e.paramId + '". Value: "' + e.value, consolePlaceTag);
+
                 if (e.paramId === 'delayMode') e.value = Math.ceil(e.value * 2);
 
                 window.props.setPropertyValue(e.paramId, e.value);
@@ -132,6 +164,8 @@ export class PluginCore {
         });
         core.on('loadState', (e) => {
             let parsedData = JSON.parse(e.value);
+
+            ConsoleTools.log('Received state from DAW: ', consolePlaceTag, parsedData);
 
             if (parsedData) {
                 Object.keys(parsedData).forEach((key) => {
@@ -146,6 +180,9 @@ export class PluginCore {
         });
 
         core.on('load', () => {
+            ConsoleTools.log('Audio core loaded', consolePlaceTag);
+            this.coreReady = true;
+
             this.rerenderCore();
             core.dispatch('resize', { width: 880, height: 550 });
         });
