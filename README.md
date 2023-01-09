@@ -122,28 +122,40 @@ Example:
 ### `npm run win-uninstall`
 
 The command to uninstall _builded_ VST3 plugin on Windows
+> 🛡️ Admin rights required
+
 <br/>
 
 ### `npm run win-update`
 
 The command to update _builded_ VST3 plugin on Windows
+> 🛡️ Admin rights required
+
 <br/>
 
 ### `npm run win-build-install`
 
 The command to build and install VST3 plugin on Windows
+> 🛡️ Admin rights required
+
 <br/>
 
 ### `npm run win-build-install-publish`
 
 The command to build, install and publish VST3 plugin on Windows
+> 🛡️ Admin rights required
+
 <br/>
 
 ### `npm run win-build-update`
 
 The command to build and update VST3 plugin on Windows
+> 🛡️ Admin rights required
+
 <br/>
 
 ### `npm run win-build-update-publish`
 
 The command to build, update and publish VST3 plugin on Windows
+> 🛡️ Admin rights required
+
