@@ -76,15 +76,22 @@ export class PluginCore {
             0.2
         );
 
+        console.log(process.env.REACT_APP_IMPULSE_DIR +
+            '/1-cathedral-1-max.wav');
+
         let convolvedTailLeft = elementary.convolve(
             {
-                path: 'D:/lab/shaitan-delay/public/test.wav',
+                path:
+                    process.env.REACT_APP_IMPULSE_DIR +
+                    '/1-cathedral-1-max.wav',
             },
             wetLeft
         );
         let convolvedTailRight = elementary.convolve(
             {
-                path: 'D:/lab/shaitan-delay/public/test.wav',
+                path:
+                    process.env.REACT_APP_IMPULSE_DIR +
+                    '/1-cathedral-1-max.wav',
             },
             wetRight
         );

@@ -59,3 +59,5 @@ window.props = new WindowProps([
 
 window.pluginCore = new PluginCore();
 window.pluginCore.init();
+
+console.log(process.env);
