@@ -1,19 +1,24 @@
-import { el as elementary } from '@elemaudio/core';
-import { default as core } from '@elemaudio/plugin-renderer';
 import { DelayMode } from '../enums/DelayMode';
-import { WindowProperty } from '../global/WindowProps';
 import { PlayheadEvent } from '../interfaces/PlayheadEvent';
-import FX from './FX';
+import SimpleFX from './SimpleFX';
+import { WindowProperty } from '../global/WindowProps';
+import { default as core } from '@elemaudio/plugin-renderer';
+import { el as elementary } from '@elemaudio/core';
 
 export class PluginCore {
     private coreNeedsRerender = false;
     private dawPropertiesChangeLoadingEnabled = true;
 
-    private rerenderCore() {
-        let sampleRate = 48000;
+    private simpleFX: SimpleFX;
+    private sampleRate: number;
 
-        let delayMode =
-            window.props.getPropertyValue('delayMode') ?? DelayMode.Stereo;
+    public constructor(sampleRate = 48000) {
+        this.simpleFX = new SimpleFX(elementary, sampleRate);
+        this.sampleRate = sampleRate;
+    }
+
+    private rerenderCore() {
+        let delayMode = window.props.getPropertyValue('delayMode') ?? DelayMode.Stereo;
         let delayTime = window.props.getPropertyValue('delayTime') ?? 0;
         let delayFeedback = window.props.getPropertyValue('delayFeedback') ?? 0;
         let dryLevel = window.props.getPropertyValue('dryLevel') ?? 1;
@@ -21,12 +26,10 @@ export class PluginCore {
         let bpm = window.props.getPropertyValue('bpm') ?? 0;
         let cutoff = window.props.getPropertyValue('cutoff') ?? 0;
 
-        let fx = new FX(elementary, sampleRate);
-
         let dryLeft = elementary.in({ channel: 0 });
         let dryRight = elementary.in({ channel: 1 });
 
-        let delayMS = fx.bpm2ms(bpm, 0.01 + delayTime * 0.99);
+        let delayMS = this.simpleFX.bpm2ms(bpm, 0.01 + delayTime * 0.99);
 
         let rightMSOffset = 0;
 
@@ -42,21 +45,21 @@ export class PluginCore {
                 break;
         }
 
-        let tailLeft = fx.fbdelay(delayMS, delayFeedback, dryLeft);
-        let tailRight = fx.fbdelay(delayMS, delayFeedback, dryRight);
+        let tailLeft = this.simpleFX.fbdelay(delayMS, delayFeedback, dryLeft);
+        let tailRight = this.simpleFX.fbdelay(delayMS, delayFeedback, dryRight);
 
         let wetLeft = elementary.lowpass(
             cutoff * 5000,
             1,
-            fx.flanger(tailLeft, bpm, 0.4)
+            this.simpleFX.flanger(tailLeft, bpm, 0.4)
         );
         let wetRight = elementary.lowpass(
             cutoff * 5000,
             1,
-            fx.flanger(
+            this.simpleFX.flanger(
                 rightMSOffset === 0
                     ? tailRight
-                    : fx.fbdelay(rightMSOffset, 0, tailRight),
+                    : this.simpleFX.fbdelay(rightMSOffset, 0, tailRight),
                 bpm,
                 0.4
             )

@@ -1,4 +1,4 @@
-export default class FX {
+export default class SimpleFX {
     elementary: any;
     sampleRate: number;
 
