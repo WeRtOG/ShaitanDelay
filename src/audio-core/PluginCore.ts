@@ -21,10 +21,12 @@ export class PluginCore {
 
     private simpleFX: SimpleFX;
     private sampleRate: number;
+    private impulseDirectory: string;
 
     public constructor(sampleRate = 48000) {
         this.simpleFX = new SimpleFX(elementary, sampleRate);
         this.sampleRate = sampleRate;
+        this.impulseDirectory = process.env.REACT_APP_IMPULSE_DIR ?? '';
     }
 
     private rerenderCore() {
@@ -76,22 +78,26 @@ export class PluginCore {
             0.2
         );
 
-        console.log(process.env.REACT_APP_IMPULSE_DIR +
-            '/1-cathedral-1-max.wav');
+        const reverbLevels = ['min', 'mid', 'max'];
+
+        let currentReverbLevel =
+            reverbLevels[Math.round(delayFeedback * 3)] ?? 'error';
+
+        let impulsePath =
+            this.impulseDirectory +
+            '/cathedral-1-' +
+            currentReverbLevel +
+            '.wav';
 
         let convolvedTailLeft = elementary.convolve(
             {
-                path:
-                    process.env.REACT_APP_IMPULSE_DIR +
-                    '/1-cathedral-1-max.wav',
+                path: impulsePath,
             },
             wetLeft
         );
         let convolvedTailRight = elementary.convolve(
             {
-                path:
-                    process.env.REACT_APP_IMPULSE_DIR +
-                    '/1-cathedral-1-max.wav',
+                path: impulsePath,
             },
             wetRight
         );
