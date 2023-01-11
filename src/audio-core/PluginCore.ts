@@ -181,6 +181,8 @@ export class PluginCore {
             }
         }, 100);
 
+        core.on('error', (e) => ConsoleTools.error(e));
+
         core.on('meter', function (e) {
             /*if (e.source === 'left') {
                 window.props.setPropertyValue('audioPeakL', e.max);

@@ -95,7 +95,7 @@ function App() {
                         title='Time'
                         step={1 / 16}
                         smooth={true}
-                        movementPowerAdjust={3}
+                        movementPowerAdjust={2}
                         value={delayTime}
                         color={1}
                         onChange={(newValue: number) => setDelayTime(newValue)}

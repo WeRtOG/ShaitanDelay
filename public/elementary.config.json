@@ -10,6 +10,10 @@
     "window": {
         "width": 880,
         "height": 550,
+        "maxWidth": 880,
+        "maxHeight": 550,
+        "minWidth": 880,
+        "minHeight": 550,
         "showToolbar": false
     },
     "parameters": [

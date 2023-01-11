@@ -141,7 +141,7 @@ checkBrowsers(paths.appPath, isInteractive)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-    console.log('Creating an optimized build for VST3 UI...');
+    console.log('🐈‍ Creating an optimized build for VST3 UI...');
 
     const compiler = webpack(config);
     return new Promise((resolve, reject) => {

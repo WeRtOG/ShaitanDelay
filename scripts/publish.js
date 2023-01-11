@@ -74,13 +74,27 @@ async function main() {
 
                     if (isChannel) chatID = '-' + chatID;
 
+                    let os = 'Unknown';
+
+                    switch(process.platform) {
+                        case 'win32':
+                            os = 'Windows';
+                            break;
+                        case 'darwin':
+                            os = 'MacOS';
+                            break;
+                        default:
+                            os = 'Unknown (' + process.platform + ')';
+                            break;
+                    }
+
                     console.log('⏳ Uploading to Telegram... Please wait');
 
                     formData.append('chat_id', chatID);
                     formData.append('document', fs.createReadStream(zip));
                     formData.append(
                         'caption',
-                        '*🔮 Build hash: *\n#' + md5(Date.now().toString())
+                        '*💻 Target OS: *' + os + '\n*🔮 Build hash: *\n#' + md5(Date.now().toString())
                     );
                     formData.append('parse_mode', 'markdown');
 

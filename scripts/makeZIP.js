@@ -1,10 +1,10 @@
 const fs = require('fs');
 const archiver = require('archiver');
 
-var output = fs.createWriteStream(
-    './dist/ShaitanDelay-build-' + Date.now() + '.zip'
+let output = fs.createWriteStream(
+    './dist/ShaitanDelay-build-' + process.platform + '-' + Date.now() + '.zip'
 );
-var archive = archiver('zip');
+let archive = archiver('zip');
 
 output.on('close', function () {
     console.log('✨ ' + archive.pointer() + ' total bytes');
